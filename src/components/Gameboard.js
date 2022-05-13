@@ -7,7 +7,8 @@ const Gameboard = () => {
       <img src={logo} alt="Tic-tac-toe XO logo" className="logo" />
       <span>{/* <!-- x/o icon -->  */}turn</span>
       <button>
-        Restart Game <img src={iconRestart} alt="" />
+        <span className="visually-hidden">Restart Game</span>
+        <img src={iconRestart} alt="" />
       </button>
       <span>X (You)</span>
       <span>{/* <!-- Your score --> */}</span>
