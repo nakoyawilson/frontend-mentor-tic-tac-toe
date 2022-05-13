@@ -9,6 +9,10 @@ const App = () => {
   const [showRestartModal, setShowRestartModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [playAgainstCPU, setPlayAgainstCPU] = useState(null);
+  const [currentTurn, setCurrentTurn] = useState(1);
+  const [xScore, setXScore] = useState(0);
+  const [oScore, setOScore] = useState(0);
+  const [tiesScore, setTiesScore] = useState(0);
 
   const startGame = (e) => {
     if (e.target.value === "cpu") {
@@ -98,7 +102,12 @@ const App = () => {
           </div>
         </Modal>
       )}
-      <Gameboard />
+      <Gameboard
+        currentTurn={currentTurn}
+        xScore={xScore}
+        oScore={oScore}
+        tiesScore={tiesScore}
+      />
       {showRestartModal && (
         <Modal>
           <h2>Restart game?</h2>

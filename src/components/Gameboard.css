@@ -1,0 +1,99 @@
+.gameboard.container {
+  margin: 2.4rem auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.turn-indicator {
+  background: var(--semi-dark-navy);
+  box-shadow: inset 0px -4px 0px #10212a;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.9rem;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  text-align: center;
+  letter-spacing: 0.875px;
+  color: var(--silver);
+  padding: 0.9rem 1.5rem 1.4rem;
+  width: fit-content;
+}
+
+.restart-btn {
+  background: var(--silver);
+  box-shadow: inset 0px -4px 0px #6b8997;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart-icon {
+  width: 16px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 96px);
+  gap: 2rem;
+  margin-top: 6.4rem;
+}
+
+.board-space {
+  background: var(--semi-dark-navy);
+  box-shadow: inset 0px -8px 0px #10212a;
+  border-radius: 10px;
+}
+
+.score-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.score {
+  padding: 1.2rem;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+  color: var(--dark-navy);
+}
+
+.score.player-x {
+  background: var(--light-blue);
+}
+
+.score.ties {
+  background: var(--silver);
+}
+
+.score.player-o {
+  background: var(--light-yellow);
+}
+
+.score-heading {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  letter-spacing: 0.875px;
+}
+
+.score-value {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: 1.25px;
+}
