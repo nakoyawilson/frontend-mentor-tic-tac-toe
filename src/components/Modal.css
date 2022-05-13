@@ -44,10 +44,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1.1rem;
+  border-radius: 10px;
 }
 
-.icon-wrapper {
-  transform: scale(0.5);
+.icon-img {
+  width: 32px;
+  height: 32px;
 }
 
 .icon {
@@ -56,7 +59,10 @@
 
 .icon-option:checked + .icon-label {
   background: var(--silver);
-  border-radius: 10px;
+}
+
+.icon-option:focus + .icon-label {
+  outline: 2px solid var(--silver);
 }
 
 .icon-option:checked + .icon-label .icon {

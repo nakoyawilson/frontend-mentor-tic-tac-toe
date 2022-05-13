@@ -40,6 +40,13 @@ svg {
   display: block;
 }
 
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  text-transform: uppercase;
+}
+
 /* Shared Styles */
 
 .visually-hidden {
