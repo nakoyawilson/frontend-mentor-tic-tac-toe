@@ -2,7 +2,14 @@ import logo from "../assets/logo.svg";
 import iconRestart from "../assets/icon-restart.svg";
 import "./Gameboard.css";
 
-const Gameboard = ({ currentTurn, xScore, oScore, tiesScore }) => {
+const Gameboard = ({
+  currentTurn,
+  xScore,
+  oScore,
+  tiesScore,
+  playRound,
+  boardSpaces,
+}) => {
   return (
     <section className="gameboard container">
       <div className="header">
@@ -45,19 +52,23 @@ const Gameboard = ({ currentTurn, xScore, oScore, tiesScore }) => {
         </h2>
         <button className="restart-btn">
           <span className="visually-hidden">Restart Game</span>
-          <img src={iconRestart} alt="" class="restart-icon" />
+          <img src={iconRestart} alt="" className="restart-icon" />
         </button>
       </div>
       <div className="game-grid">
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
-        <button type="button" className="board-space"></button>
+        {boardSpaces.map((space, idx) => {
+          return (
+            <button
+              key={idx}
+              type="button"
+              className={`board-space ${
+                space === "x" ? "x-space" : space === "o" ? "o-space" : ""
+              }`}
+              value={idx}
+              onClick={playRound}
+            ></button>
+          );
+        })}
       </div>
       <div className="score-wrapper">
         <div className="score player-x">

@@ -50,9 +50,20 @@
 }
 
 .board-space {
-  background: var(--semi-dark-navy);
+  background-color: var(--semi-dark-navy);
+  background-repeat: no-repeat;
+  background-position: center 24px;
+  background-size: 40px 40px;
   box-shadow: inset 0px -8px 0px #10212a;
   border-radius: 10px;
+}
+
+.board-space.x-space {
+  background-image: url("../assets/icon-x.svg");
+}
+
+.board-space.o-space {
+  background-image: url("../assets/icon-o.svg");
 }
 
 .score-wrapper {
