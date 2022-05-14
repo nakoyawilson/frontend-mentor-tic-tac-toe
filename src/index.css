@@ -12,6 +12,7 @@
   --light-yellow: hsl(39, 88%, 58%);
   --light-yellow-hover: hsl(39, 100%, 69%);
   --light-yellow-shadow: #cc8b13;
+  --black-transparent: hsla(0, 0%, 0%, 0.5);
 }
 
 /* CSS Reset */

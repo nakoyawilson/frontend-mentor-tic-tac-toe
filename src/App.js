@@ -1,6 +1,8 @@
 import Modal from "./components/Modal";
 import Gameboard from "./components/Gameboard";
 import logo from "./assets/logo.svg";
+import xIcon from "./assets/icon-x.svg";
+import oIcon from "./assets/icon-o.svg";
 import "./App.css";
 import { useState } from "react";
 
@@ -9,20 +11,21 @@ const App = () => {
   const [showRestartModal, setShowRestartModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [playAgainstCPU, setPlayAgainstCPU] = useState(null);
-  const [currentTurn, setCurrentTurn] = useState(0);
-  const [xScore, setXScore] = useState(1);
+  const [currentTurn, setCurrentTurn] = useState(1);
+  const [winner, setWinner] = useState(null);
+  const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
   const [tiesScore, setTiesScore] = useState(0);
   const [boardSpaces, setBoardSpaces] = useState([
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
+    { spaceDisabled: false },
   ]);
 
   const startGame = (e) => {
@@ -36,50 +39,102 @@ const App = () => {
 
   const determineWinner = (moves) => {
     if (
-      (moves[0] === "x" && moves[1] === "x" && moves[2] === "x") ||
-      (moves[3] === "x" && moves[4] === "x" && moves[5] === "x") ||
-      (moves[6] === "x" && moves[7] === "x" && moves[8] === "x") ||
-      (moves[0] === "x" && moves[4] === "x" && moves[8] === "x") ||
-      (moves[2] === "x" && moves[4] === "x" && moves[6] === "x") ||
-      (moves[0] === "x" && moves[3] === "x" && moves[6] === "x") ||
-      (moves[1] === "x" && moves[4] === "x" && moves[7] === "x") ||
-      (moves[2] === "x" && moves[5] === "x" && moves[8] === "x")
+      (moves[0].playerMark === "x" &&
+        moves[1].playerMark === "x" &&
+        moves[2].playerMark === "x") ||
+      (moves[3].playerMark === "x" &&
+        moves[4].playerMark === "x" &&
+        moves[5].playerMark === "x") ||
+      (moves[6].playerMark === "x" &&
+        moves[7].playerMark === "x" &&
+        moves[8].playerMark === "x") ||
+      (moves[0].playerMark === "x" &&
+        moves[4].playerMark === "x" &&
+        moves[8].playerMark === "x") ||
+      (moves[2].playerMark === "x" &&
+        moves[4].playerMark === "x" &&
+        moves[6].playerMark === "x") ||
+      (moves[0].playerMark === "x" &&
+        moves[3].playerMark === "x" &&
+        moves[6].playerMark === "x") ||
+      (moves[1].playerMark === "x" &&
+        moves[4].playerMark === "x" &&
+        moves[7].playerMark === "x") ||
+      (moves[2].playerMark === "x" &&
+        moves[5].playerMark === "x" &&
+        moves[8].playerMark === "x")
     ) {
       setXScore((prevXScore) => (prevXScore += 1));
+      setWinner("x");
     } else if (
-      (moves[0] === "o" && moves[1] === "o" && moves[2] === "o") ||
-      (moves[3] === "o" && moves[4] === "o" && moves[5] === "o") ||
-      (moves[6] === "o" && moves[7] === "o" && moves[8] === "o") ||
-      (moves[0] === "o" && moves[4] === "o" && moves[8] === "o") ||
-      (moves[2] === "o" && moves[4] === "o" && moves[6] === "o") ||
-      (moves[0] === "o" && moves[3] === "o" && moves[6] === "o") ||
-      (moves[1] === "o" && moves[4] === "o" && moves[7] === "o") ||
-      (moves[2] === "o" && moves[5] === "o" && moves[8] === "o")
+      (moves[0].playerMark === "o" &&
+        moves[1].playerMark === "o" &&
+        moves[2].playerMark === "o") ||
+      (moves[3].playerMark === "o" &&
+        moves[4].playerMark === "o" &&
+        moves[5].playerMark === "o") ||
+      (moves[6].playerMark === "o" &&
+        moves[7].playerMark === "o" &&
+        moves[8].playerMark === "o") ||
+      (moves[0].playerMark === "o" &&
+        moves[4].playerMark === "o" &&
+        moves[8].playerMark === "o") ||
+      (moves[2].playerMark === "o" &&
+        moves[4].playerMark === "o" &&
+        moves[6].playerMark === "o") ||
+      (moves[0].playerMark === "o" &&
+        moves[3].playerMark === "o" &&
+        moves[6].playerMark === "o") ||
+      (moves[1].playerMark === "o" &&
+        moves[4].playerMark === "o" &&
+        moves[7].playerMark === "o") ||
+      (moves[2].playerMark === "o" &&
+        moves[5].playerMark === "o" &&
+        moves[8].playerMark === "o")
     ) {
       setOScore((prevOScore) => (prevOScore += 1));
+      setWinner("o");
     } else if (
-      moves[0] &&
-      moves[1] &&
-      moves[2] &&
-      moves[3] &&
-      moves[4] &&
-      moves[5] &&
-      moves[6] &&
-      moves[7] &&
-      moves[8]
+      moves[0].playerMark &&
+      moves[1].playerMark &&
+      moves[2].playerMark &&
+      moves[3].playerMark &&
+      moves[4].playerMark &&
+      moves[5].playerMark &&
+      moves[6].playerMark &&
+      moves[7].playerMark &&
+      moves[8].playerMark
     ) {
       setTiesScore((prevTiesScore) => (prevTiesScore += 1));
+      setWinner("tied");
+    }
+    if (winner) {
+      setBoardSpaces((prevBoardSpaces) => {
+        const spaces = [...prevBoardSpaces];
+        spaces.forEach((space) => {
+          space.spaceDisabled = true;
+        });
+        return spaces;
+      });
+      setShowResultsModal(true);
     }
   };
 
   const playRound = (e) => {
-    e.target.disabled = true;
     const spaceIndex = e.target.value;
     const spaces = [...boardSpaces];
     if (currentTurn % 2 === 1) {
-      spaces[spaceIndex] = "x";
+      spaces[spaceIndex] = {
+        playerMark: "x",
+        spaceClass: "x-space",
+        spaceDisabled: true,
+      };
     } else {
-      spaces[spaceIndex] = "o";
+      spaces[spaceIndex] = {
+        playerMark: "o",
+        spaceClass: "o-space",
+        spaceDisabled: true,
+      };
     }
     setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
     determineWinner(spaces);
@@ -90,7 +145,7 @@ const App = () => {
     <>
       <h1 className="visually-hidden">Tic Tac Toe</h1>
       {showNewGameModal && (
-        <Modal>
+        <Modal modalClasses="modal start-modal">
           <div className="new-game container">
             <img src={logo} alt="Tic-tac-toe XO logo" className="logo" />
             <form className="icon-settings">
@@ -173,21 +228,52 @@ const App = () => {
         tiesScore={tiesScore}
         playRound={playRound}
         boardSpaces={boardSpaces}
+        setShowRestartModal={setShowRestartModal}
       />
       {showRestartModal && (
-        <Modal>
-          <h2>Restart game?</h2>
-          <button>No, cancel</button>
-          <button>Yes, restart</button>
+        <Modal modalClasses="modal restart-modal">
+          <div className="content-wrapper">
+            <h2 className="restart-heading">Restart game?</h2>
+            <button
+              className="modal-btn cancel-btn"
+              onClick={() => setShowRestartModal(false)}
+            >
+              No, cancel
+            </button>
+            <button className="modal-btn restart-btn">Yes, restart</button>
+          </div>
         </Modal>
       )}
       {showResultsModal && (
-        <Modal>
-          {playAgainstCPU && <h2>Oh no, you lost You won! Round tied</h2>}
-          {!playAgainstCPU && <h2> Player {/* <!-- 1/2 --> */} wins!</h2>}
-          <p>{/* <!-- x/o icon --> */} takes the round</p>
-          <button>Quit</button>
-          <button>Next round</button>
+        <Modal modalClasses="modal results-modal">
+          <div className="content-wrapper">
+            {playAgainstCPU && (
+              <h2 className="results-heading">
+                Oh no, you lost You won! Round tied
+              </h2>
+            )}
+            {!playAgainstCPU && (
+              <h2 className="results-heading">
+                {" "}
+                Player {/* <!-- 1/2 --> */} wins!
+              </h2>
+            )}
+            <p class={`results-paragraph ${winner}-paragraph`}>
+              <img
+                src={winner === "x" ? xIcon : oIcon}
+                alt=""
+                class="winner-marker"
+              />
+              <span>takes the round</span>
+            </p>
+            <button
+              className="modal-btn quit-btn"
+              onClick={() => setShowResultsModal(false)}
+            >
+              Quit
+            </button>
+            <button className="modal-btn next-btn">Next round</button>
+          </div>
         </Modal>
       )}
     </>

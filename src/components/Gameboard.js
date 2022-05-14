@@ -9,6 +9,7 @@ const Gameboard = ({
   tiesScore,
   playRound,
   boardSpaces,
+  setShowRestartModal,
 }) => {
   return (
     <section className="gameboard container">
@@ -50,7 +51,10 @@ const Gameboard = ({
           </span>
           turn
         </h2>
-        <button className="restart-btn">
+        <button
+          className="restart-btn"
+          onClick={() => setShowRestartModal(true)}
+        >
           <span className="visually-hidden">Restart Game</span>
           <img src={iconRestart} alt="" className="restart-icon" />
         </button>
@@ -62,10 +66,11 @@ const Gameboard = ({
               key={idx}
               type="button"
               className={`board-space ${
-                space === "x" ? "x-space" : space === "o" ? "o-space" : ""
+                space.spaceClass ? space.spaceClass : ""
               }`}
               value={idx}
               onClick={playRound}
+              disabled={space.spaceDisabled}
             ></button>
           );
         })}
