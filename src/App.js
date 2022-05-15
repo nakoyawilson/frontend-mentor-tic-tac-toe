@@ -47,8 +47,86 @@ const App = () => {
     setGameInProgress(true);
   };
 
+  const colorWinningTiles = useCallback(
+    (mark) => {
+      const indexes = [];
+      if (
+        boardSpaces[0].playerMark === mark &&
+        boardSpaces[1].playerMark === mark &&
+        boardSpaces[2].playerMark === mark
+      ) {
+        indexes.push(0);
+        indexes.push(1);
+        indexes.push(2);
+      } else if (
+        boardSpaces[3].playerMark === mark &&
+        boardSpaces[4].playerMark === mark &&
+        boardSpaces[5].playerMark === mark
+      ) {
+        indexes.push(3);
+        indexes.push(4);
+        indexes.push(5);
+      } else if (
+        boardSpaces[6].playerMark === mark &&
+        boardSpaces[7].playerMark === mark &&
+        boardSpaces[8].playerMark === mark
+      ) {
+        indexes.push(6);
+        indexes.push(7);
+        indexes.push(8);
+      } else if (
+        boardSpaces[0].playerMark === mark &&
+        boardSpaces[4].playerMark === mark &&
+        boardSpaces[8].playerMark === mark
+      ) {
+        indexes.push(0);
+        indexes.push(4);
+        indexes.push(8);
+      } else if (
+        boardSpaces[2].playerMark === mark &&
+        boardSpaces[4].playerMark === mark &&
+        boardSpaces[6].playerMark === mark
+      ) {
+        indexes.push(2);
+        indexes.push(4);
+        indexes.push(6);
+      } else if (
+        boardSpaces[0].playerMark === mark &&
+        boardSpaces[3].playerMark === mark &&
+        boardSpaces[6].playerMark === mark
+      ) {
+        indexes.push(0);
+        indexes.push(3);
+        indexes.push(6);
+      } else if (
+        boardSpaces[1].playerMark === mark &&
+        boardSpaces[4].playerMark === mark &&
+        boardSpaces[7].playerMark === mark
+      ) {
+        indexes.push(1);
+        indexes.push(4);
+        indexes.push(7);
+      } else if (
+        boardSpaces[2].playerMark === mark &&
+        boardSpaces[5].playerMark === mark &&
+        boardSpaces[8].playerMark === mark
+      ) {
+        indexes.push(2);
+        indexes.push(5);
+        indexes.push(8);
+      }
+      const spaces = [...boardSpaces];
+      spaces.forEach((space, idx) => {
+        if (indexes.includes(idx)) {
+          space.spaceClass = `${mark}-space winning-play`;
+        }
+      });
+      setBoardSpaces(spaces);
+    },
+    [boardSpaces]
+  );
+
   const determineWinner = useCallback(() => {
-    // TODO: Change color of winning spaces
     if (
       (boardSpaces[0].playerMark === "x" &&
         boardSpaces[1].playerMark === "x" &&
@@ -78,7 +156,8 @@ const App = () => {
       setXScore((prevXScore) => prevXScore + 1);
       setWinner("x");
       setGameInProgress(false);
-      setTimeout(() => setShowResultsModal(true), 500);
+      colorWinningTiles("x");
+      setTimeout(() => setShowResultsModal(true), 1000);
     } else if (
       (boardSpaces[0].playerMark === "o" &&
         boardSpaces[1].playerMark === "o" &&
@@ -108,7 +187,8 @@ const App = () => {
       setOScore((prevOScore) => prevOScore + 1);
       setWinner("o");
       setGameInProgress(false);
-      setTimeout(() => setShowResultsModal(true), 500);
+      colorWinningTiles("o");
+      setTimeout(() => setShowResultsModal(true), 1000);
     } else if (
       boardSpaces[0].playerMark &&
       boardSpaces[1].playerMark &&
@@ -123,9 +203,9 @@ const App = () => {
       setTiesScore((prevTiesScore) => prevTiesScore + 1);
       setWinner("tied");
       setGameInProgress(false);
-      setTimeout(() => setShowResultsModal(true), 500);
+      setTimeout(() => setShowResultsModal(true), 1000);
     }
-  }, [boardSpaces]);
+  }, [boardSpaces, colorWinningTiles]);
 
   const playRound = (e) => {
     const spaceIndex = e.target.value;
