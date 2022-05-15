@@ -31,6 +31,7 @@ const App = () => {
     { id: 8, spaceDisabled: false },
     { id: 9, spaceDisabled: false },
   ]);
+  const [gameInProgress, setGameInProgress] = useState(false);
 
   const startGame = (e) => {
     const updatePlayersInfo = [...playersInfo];
@@ -43,54 +44,7 @@ const App = () => {
     }
     setShowNewGameModal(false);
     setPlayersInfo(updatePlayersInfo);
-  };
-
-  const playRound = (e) => {
-    const spaceIndex = e.target.value;
-    const spaces = [...boardSpaces];
-    if (currentTurn % 2 === 1) {
-      spaces[spaceIndex].playerMark = "x";
-      spaces[spaceIndex].spaceClass = "x-space";
-      spaces[spaceIndex].spaceDisabled = true;
-    } else {
-      spaces[spaceIndex].playerMark = "o";
-      spaces[spaceIndex].spaceClass = "o-space";
-      spaces[spaceIndex].spaceDisabled = true;
-    }
-    setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
-    setBoardSpaces(spaces);
-  };
-
-  const handleMarkChange = (e) => {
-    const updatePlayersInfo = [...playersInfo];
-    if (e.target.value === "x") {
-      updatePlayersInfo[0].playerOne = "x";
-      updatePlayersInfo[1].playerTwo = "o";
-    } else {
-      updatePlayersInfo[0].playerOne = "o";
-      updatePlayersInfo[1].playerTwo = "x";
-    }
-    setPlayersInfo(updatePlayersInfo);
-  };
-
-  const resetBoard = () => {
-    setBoardSpaces([
-      { id: 1, spaceDisabled: false },
-      { id: 2, spaceDisabled: false },
-      { id: 3, spaceDisabled: false },
-      { id: 4, spaceDisabled: false },
-      { id: 5, spaceDisabled: false },
-      { id: 6, spaceDisabled: false },
-      { id: 7, spaceDisabled: false },
-      { id: 8, spaceDisabled: false },
-      { id: 9, spaceDisabled: false },
-    ]);
-    setCurrentTurn(1);
-  };
-
-  const disableBoard = () => {
-    const spaces = [...boardSpaces];
-    spaces.forEach((space) => (space.spaceDisabled = true));
+    setGameInProgress(true);
   };
 
   const determineWinner = useCallback(() => {
@@ -123,7 +77,8 @@ const App = () => {
     ) {
       setXScore((prevXScore) => prevXScore + 1);
       setWinner("x");
-      setShowResultsModal(true);
+      setGameInProgress(false);
+      setTimeout(() => setShowResultsModal(true), 500);
     } else if (
       (boardSpaces[0].playerMark === "o" &&
         boardSpaces[1].playerMark === "o" &&
@@ -152,7 +107,8 @@ const App = () => {
     ) {
       setOScore((prevOScore) => prevOScore + 1);
       setWinner("o");
-      setShowResultsModal(true);
+      setGameInProgress(false);
+      setTimeout(() => setShowResultsModal(true), 500);
     } else if (
       boardSpaces[0].playerMark &&
       boardSpaces[1].playerMark &&
@@ -166,54 +122,100 @@ const App = () => {
     ) {
       setTiesScore((prevTiesScore) => prevTiesScore + 1);
       setWinner("tied");
-      setShowResultsModal(true);
+      setGameInProgress(false);
+      setTimeout(() => setShowResultsModal(true), 500);
     }
   }, [boardSpaces]);
 
-  useEffect(() => {
+  const playRound = (e) => {
+    const spaceIndex = e.target.value;
+    const spaces = [...boardSpaces];
+    if (currentTurn % 2 === 1) {
+      spaces[spaceIndex].playerMark = "x";
+      spaces[spaceIndex].spaceClass = "x-space";
+      spaces[spaceIndex].spaceDisabled = true;
+    } else {
+      spaces[spaceIndex].playerMark = "o";
+      spaces[spaceIndex].spaceClass = "o-space";
+      spaces[spaceIndex].spaceDisabled = true;
+    }
+    setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
+    setBoardSpaces(spaces);
     determineWinner();
-  }, [determineWinner]);
+  };
+
+  const handleMarkChange = (e) => {
+    const updatePlayersInfo = [...playersInfo];
+    if (e.target.value === "x") {
+      updatePlayersInfo[0].playerOne = "x";
+      updatePlayersInfo[1].playerTwo = "o";
+    } else {
+      updatePlayersInfo[0].playerOne = "o";
+      updatePlayersInfo[1].playerTwo = "x";
+    }
+    setPlayersInfo(updatePlayersInfo);
+  };
+
+  const resetBoard = () => {
+    setBoardSpaces([
+      { id: 1, spaceDisabled: false },
+      { id: 2, spaceDisabled: false },
+      { id: 3, spaceDisabled: false },
+      { id: 4, spaceDisabled: false },
+      { id: 5, spaceDisabled: false },
+      { id: 6, spaceDisabled: false },
+      { id: 7, spaceDisabled: false },
+      { id: 8, spaceDisabled: false },
+      { id: 9, spaceDisabled: false },
+    ]);
+    setCurrentTurn(1);
+    setWinner(null);
+    setGameInProgress(true);
+  };
+
+  const disableBoard = () => {
+    setGameInProgress(false);
+  };
+
+  // useEffect(() => {
+  //   determineWinner();
+  // }, [determineWinner]);
 
   useEffect(() => {
-    // TODO: Temporarily disable all buttons while computer plays
     // TODO: Stop CPU from playing if modal is open
-    if (playAgainstCPU) {
-      const cpuMarker = playersInfo[1].playerTwo;
-      if (
-        (cpuMarker === "x" &&
-          currentTurn % 2 === 1 &&
-          showResultsModal === false &&
-          showRestartModal === false) ||
-        (cpuMarker === "o" &&
-          currentTurn % 2 === 0 &&
-          showResultsModal === false &&
-          showRestartModal === false)
-      ) {
-        const availableSpaces = boardSpaces.filter(
-          (space) => !space.spaceDisabled
-        );
-        console.log(availableSpaces);
-        const cpuPlay = Math.floor(Math.random() * availableSpaces.length);
-        const playIndex = boardSpaces.findIndex(
-          (space) => space.id === availableSpaces[cpuPlay].id
-        );
-        setTimeout(() => {
-          const spaces = [...boardSpaces];
-          spaces[playIndex].playerMark = cpuMarker;
-          spaces[playIndex].spaceClass = `${cpuMarker}-space`;
-          spaces[playIndex].spaceDisabled = true;
-          setBoardSpaces(spaces);
-          setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
-        }, 1000);
-      }
+    const cpuMarker = playersInfo[1].playerTwo;
+    if (
+      playAgainstCPU &&
+      gameInProgress &&
+      !winner &&
+      ((cpuMarker === "x" && currentTurn % 2 === 1) ||
+        (cpuMarker === "o" && currentTurn % 2 === 0))
+    ) {
+      setGameInProgress(false);
+      const availableSpaces = boardSpaces.filter((space) => !space.playerMark);
+      const cpuPlay = Math.floor(Math.random() * availableSpaces.length);
+      const playIndex = boardSpaces.findIndex(
+        (space) => space.id === availableSpaces[cpuPlay].id
+      );
+      const spaces = [...boardSpaces];
+      setTimeout(() => {
+        spaces[playIndex].playerMark = cpuMarker;
+        spaces[playIndex].spaceClass = `${cpuMarker}-space`;
+        spaces[playIndex].spaceDisabled = true;
+        setBoardSpaces(spaces);
+        setGameInProgress(true);
+        setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
+        determineWinner();
+      }, 1000);
     }
   }, [
     boardSpaces,
     playAgainstCPU,
     playersInfo,
     currentTurn,
-    showRestartModal,
-    showResultsModal,
+    gameInProgress,
+    winner,
+    determineWinner,
   ]);
 
   return (
@@ -310,6 +312,7 @@ const App = () => {
         setShowRestartModal={setShowRestartModal}
         playAgainstCPU={playAgainstCPU}
         playersInfo={playersInfo}
+        gameInProgress={gameInProgress}
       />
       {showRestartModal && (
         <Modal modalClasses="modal restart-modal">
