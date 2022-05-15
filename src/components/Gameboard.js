@@ -10,6 +10,8 @@ const Gameboard = ({
   playRound,
   boardSpaces,
   setShowRestartModal,
+  playAgainstCPU,
+  playersInfo,
 }) => {
   return (
     <section className="gameboard container">
@@ -77,7 +79,17 @@ const Gameboard = ({
       </div>
       <div className="score-wrapper">
         <div className="score player-x">
-          <h3 className="score-heading">X (You)</h3>
+          <h3 className="score-heading">
+            X (
+            {playAgainstCPU && playersInfo[0].playerOne === "x"
+              ? "You"
+              : !playAgainstCPU && playersInfo[0].playerOne === "x"
+              ? "P1"
+              : !playAgainstCPU && playersInfo[1].playerTwo === "x"
+              ? "P2"
+              : "CPU"}
+            )
+          </h3>
           <span className="score-value">{xScore}</span>
         </div>
         <div className="score ties">
@@ -85,7 +97,17 @@ const Gameboard = ({
           <span className="score-value">{tiesScore}</span>
         </div>
         <div className="score player-o">
-          <h3 className="score-heading">O (CPU)</h3>
+          <h3 className="score-heading">
+            O (
+            {playAgainstCPU && playersInfo[0].playerOne === "o"
+              ? "You"
+              : !playAgainstCPU && playersInfo[0].playerOne === "o"
+              ? "P1"
+              : !playAgainstCPU && playersInfo[1].playerTwo === "o"
+              ? "P2"
+              : "CPU"}
+            )
+          </h3>
           <span className="score-value">{oScore}</span>
         </div>
       </div>

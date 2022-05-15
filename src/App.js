@@ -1,145 +1,220 @@
+import { useState, useEffect, useCallback } from "react";
 import Modal from "./components/Modal";
 import Gameboard from "./components/Gameboard";
 import logo from "./assets/logo.svg";
 import xIcon from "./assets/icon-x.svg";
 import oIcon from "./assets/icon-o.svg";
 import "./App.css";
-import { useState } from "react";
 
 const App = () => {
   const [showNewGameModal, setShowNewGameModal] = useState(true);
   const [showRestartModal, setShowRestartModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [playAgainstCPU, setPlayAgainstCPU] = useState(null);
+  const [playersInfo, setPlayersInfo] = useState([
+    { playerOne: "x", playerType: "human" },
+    { playerTwo: "o" },
+  ]);
   const [currentTurn, setCurrentTurn] = useState(1);
   const [winner, setWinner] = useState(null);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
   const [tiesScore, setTiesScore] = useState(0);
   const [boardSpaces, setBoardSpaces] = useState([
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
-    { spaceDisabled: false },
+    { id: 1, spaceDisabled: false },
+    { id: 2, spaceDisabled: false },
+    { id: 3, spaceDisabled: false },
+    { id: 4, spaceDisabled: false },
+    { id: 5, spaceDisabled: false },
+    { id: 6, spaceDisabled: false },
+    { id: 7, spaceDisabled: false },
+    { id: 8, spaceDisabled: false },
+    { id: 9, spaceDisabled: false },
   ]);
 
   const startGame = (e) => {
+    const updatePlayersInfo = [...playersInfo];
     if (e.target.value === "cpu") {
       setPlayAgainstCPU(true);
+      updatePlayersInfo[1].playerType = "cpu";
     } else if (e.target.value === "human") {
       setPlayAgainstCPU(false);
+      updatePlayersInfo[1].playerType = "human";
     }
     setShowNewGameModal(false);
-  };
-
-  const determineWinner = (moves) => {
-    if (
-      (moves[0].playerMark === "x" &&
-        moves[1].playerMark === "x" &&
-        moves[2].playerMark === "x") ||
-      (moves[3].playerMark === "x" &&
-        moves[4].playerMark === "x" &&
-        moves[5].playerMark === "x") ||
-      (moves[6].playerMark === "x" &&
-        moves[7].playerMark === "x" &&
-        moves[8].playerMark === "x") ||
-      (moves[0].playerMark === "x" &&
-        moves[4].playerMark === "x" &&
-        moves[8].playerMark === "x") ||
-      (moves[2].playerMark === "x" &&
-        moves[4].playerMark === "x" &&
-        moves[6].playerMark === "x") ||
-      (moves[0].playerMark === "x" &&
-        moves[3].playerMark === "x" &&
-        moves[6].playerMark === "x") ||
-      (moves[1].playerMark === "x" &&
-        moves[4].playerMark === "x" &&
-        moves[7].playerMark === "x") ||
-      (moves[2].playerMark === "x" &&
-        moves[5].playerMark === "x" &&
-        moves[8].playerMark === "x")
-    ) {
-      setXScore((prevXScore) => (prevXScore += 1));
-      setWinner("x");
-    } else if (
-      (moves[0].playerMark === "o" &&
-        moves[1].playerMark === "o" &&
-        moves[2].playerMark === "o") ||
-      (moves[3].playerMark === "o" &&
-        moves[4].playerMark === "o" &&
-        moves[5].playerMark === "o") ||
-      (moves[6].playerMark === "o" &&
-        moves[7].playerMark === "o" &&
-        moves[8].playerMark === "o") ||
-      (moves[0].playerMark === "o" &&
-        moves[4].playerMark === "o" &&
-        moves[8].playerMark === "o") ||
-      (moves[2].playerMark === "o" &&
-        moves[4].playerMark === "o" &&
-        moves[6].playerMark === "o") ||
-      (moves[0].playerMark === "o" &&
-        moves[3].playerMark === "o" &&
-        moves[6].playerMark === "o") ||
-      (moves[1].playerMark === "o" &&
-        moves[4].playerMark === "o" &&
-        moves[7].playerMark === "o") ||
-      (moves[2].playerMark === "o" &&
-        moves[5].playerMark === "o" &&
-        moves[8].playerMark === "o")
-    ) {
-      setOScore((prevOScore) => (prevOScore += 1));
-      setWinner("o");
-    } else if (
-      moves[0].playerMark &&
-      moves[1].playerMark &&
-      moves[2].playerMark &&
-      moves[3].playerMark &&
-      moves[4].playerMark &&
-      moves[5].playerMark &&
-      moves[6].playerMark &&
-      moves[7].playerMark &&
-      moves[8].playerMark
-    ) {
-      setTiesScore((prevTiesScore) => (prevTiesScore += 1));
-      setWinner("tied");
-    }
-    if (winner) {
-      setBoardSpaces((prevBoardSpaces) => {
-        const spaces = [...prevBoardSpaces];
-        spaces.forEach((space) => {
-          space.spaceDisabled = true;
-        });
-        return spaces;
-      });
-      setShowResultsModal(true);
-    }
+    setPlayersInfo(updatePlayersInfo);
   };
 
   const playRound = (e) => {
     const spaceIndex = e.target.value;
     const spaces = [...boardSpaces];
     if (currentTurn % 2 === 1) {
-      spaces[spaceIndex] = {
-        playerMark: "x",
-        spaceClass: "x-space",
-        spaceDisabled: true,
-      };
+      spaces[spaceIndex].playerMark = "x";
+      spaces[spaceIndex].spaceClass = "x-space";
+      spaces[spaceIndex].spaceDisabled = true;
     } else {
-      spaces[spaceIndex] = {
-        playerMark: "o",
-        spaceClass: "o-space",
-        spaceDisabled: true,
-      };
+      spaces[spaceIndex].playerMark = "o";
+      spaces[spaceIndex].spaceClass = "o-space";
+      spaces[spaceIndex].spaceDisabled = true;
     }
     setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
-    determineWinner(spaces);
     setBoardSpaces(spaces);
   };
+
+  const handleMarkChange = (e) => {
+    const updatePlayersInfo = [...playersInfo];
+    if (e.target.value === "x") {
+      updatePlayersInfo[0].playerOne = "x";
+      updatePlayersInfo[1].playerTwo = "o";
+    } else {
+      updatePlayersInfo[0].playerOne = "o";
+      updatePlayersInfo[1].playerTwo = "x";
+    }
+    setPlayersInfo(updatePlayersInfo);
+  };
+
+  const resetBoard = () => {
+    setBoardSpaces([
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+      { spaceDisabled: false },
+    ]);
+    setCurrentTurn(1);
+  };
+
+  const disableBoard = () => {
+    const spaces = [...boardSpaces];
+    spaces.forEach((space) => (space.spaceDisabled = true));
+  };
+
+  const determineWinner = useCallback(() => {
+    // TODO: Change color of winning spaces
+    if (
+      (boardSpaces[0].playerMark === "x" &&
+        boardSpaces[1].playerMark === "x" &&
+        boardSpaces[2].playerMark === "x") ||
+      (boardSpaces[3].playerMark === "x" &&
+        boardSpaces[4].playerMark === "x" &&
+        boardSpaces[5].playerMark === "x") ||
+      (boardSpaces[6].playerMark === "x" &&
+        boardSpaces[7].playerMark === "x" &&
+        boardSpaces[8].playerMark === "x") ||
+      (boardSpaces[0].playerMark === "x" &&
+        boardSpaces[4].playerMark === "x" &&
+        boardSpaces[8].playerMark === "x") ||
+      (boardSpaces[2].playerMark === "x" &&
+        boardSpaces[4].playerMark === "x" &&
+        boardSpaces[6].playerMark === "x") ||
+      (boardSpaces[0].playerMark === "x" &&
+        boardSpaces[3].playerMark === "x" &&
+        boardSpaces[6].playerMark === "x") ||
+      (boardSpaces[1].playerMark === "x" &&
+        boardSpaces[4].playerMark === "x" &&
+        boardSpaces[7].playerMark === "x") ||
+      (boardSpaces[2].playerMark === "x" &&
+        boardSpaces[5].playerMark === "x" &&
+        boardSpaces[8].playerMark === "x")
+    ) {
+      setXScore((prevXScore) => prevXScore + 1);
+      setWinner("x");
+      setShowResultsModal(true);
+    } else if (
+      (boardSpaces[0].playerMark === "o" &&
+        boardSpaces[1].playerMark === "o" &&
+        boardSpaces[2].playerMark === "o") ||
+      (boardSpaces[3].playerMark === "o" &&
+        boardSpaces[4].playerMark === "o" &&
+        boardSpaces[5].playerMark === "o") ||
+      (boardSpaces[6].playerMark === "o" &&
+        boardSpaces[7].playerMark === "o" &&
+        boardSpaces[8].playerMark === "o") ||
+      (boardSpaces[0].playerMark === "o" &&
+        boardSpaces[4].playerMark === "o" &&
+        boardSpaces[8].playerMark === "o") ||
+      (boardSpaces[2].playerMark === "o" &&
+        boardSpaces[4].playerMark === "o" &&
+        boardSpaces[6].playerMark === "o") ||
+      (boardSpaces[0].playerMark === "o" &&
+        boardSpaces[3].playerMark === "o" &&
+        boardSpaces[6].playerMark === "o") ||
+      (boardSpaces[1].playerMark === "o" &&
+        boardSpaces[4].playerMark === "o" &&
+        boardSpaces[7].playerMark === "o") ||
+      (boardSpaces[2].playerMark === "o" &&
+        boardSpaces[5].playerMark === "o" &&
+        boardSpaces[8].playerMark === "o")
+    ) {
+      setOScore((prevOScore) => prevOScore + 1);
+      setWinner("o");
+      setShowResultsModal(true);
+    } else if (
+      boardSpaces[0].playerMark &&
+      boardSpaces[1].playerMark &&
+      boardSpaces[2].playerMark &&
+      boardSpaces[3].playerMark &&
+      boardSpaces[4].playerMark &&
+      boardSpaces[5].playerMark &&
+      boardSpaces[6].playerMark &&
+      boardSpaces[7].playerMark &&
+      boardSpaces[8].playerMark
+    ) {
+      setTiesScore((prevTiesScore) => prevTiesScore + 1);
+      setWinner("tied");
+      setShowResultsModal(true);
+    }
+  }, [boardSpaces]);
+
+  useEffect(() => {
+    determineWinner();
+  }, [determineWinner]);
+
+  useEffect(() => {
+    // TODO: Temporarily disable all buttons while computer plays
+    // TODO: Stop CPU from playing if modal is open
+    if (playAgainstCPU) {
+      const cpuMarker = playersInfo[1].playerTwo;
+      if (
+        (cpuMarker === "x" &&
+          currentTurn % 2 === 1 &&
+          showResultsModal === false &&
+          showRestartModal === false) ||
+        (cpuMarker === "o" &&
+          currentTurn % 2 === 0 &&
+          showResultsModal === false &&
+          showRestartModal === false)
+      ) {
+        const availableSpaces = boardSpaces.filter(
+          (space) => !space.spaceDisabled
+        );
+        console.log(availableSpaces);
+        const cpuPlay = Math.floor(Math.random() * availableSpaces.length);
+        const playIndex = boardSpaces.findIndex(
+          (space) => space.id === availableSpaces[cpuPlay].id
+        );
+        setTimeout(() => {
+          const spaces = [...boardSpaces];
+          spaces[playIndex].playerMark = cpuMarker;
+          spaces[playIndex].spaceClass = `${cpuMarker}-space`;
+          spaces[playIndex].spaceDisabled = true;
+          setBoardSpaces(spaces);
+          setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
+        }, 1000);
+      }
+    }
+  }, [
+    boardSpaces,
+    playAgainstCPU,
+    playersInfo,
+    currentTurn,
+    showRestartModal,
+    showResultsModal,
+  ]);
 
   return (
     <>
@@ -156,7 +231,9 @@ const App = () => {
                   name="playerIcon"
                   id="iconX"
                   className="visually-hidden icon-option"
+                  value="x"
                   defaultChecked
+                  onChange={handleMarkChange}
                 />
                 <label htmlFor="iconX" className="icon-label">
                   <span className="visually-hidden">X icon</span>
@@ -180,6 +257,8 @@ const App = () => {
                   name="playerIcon"
                   id="iconO"
                   className="visually-hidden icon-option"
+                  value="o"
+                  onChange={handleMarkChange}
                 />
                 <label htmlFor="iconO" className="icon-label">
                   <span className="visually-hidden">O icon</span>
@@ -229,6 +308,8 @@ const App = () => {
         playRound={playRound}
         boardSpaces={boardSpaces}
         setShowRestartModal={setShowRestartModal}
+        playAgainstCPU={playAgainstCPU}
+        playersInfo={playersInfo}
       />
       {showRestartModal && (
         <Modal modalClasses="modal restart-modal">
@@ -240,39 +321,67 @@ const App = () => {
             >
               No, cancel
             </button>
-            <button className="modal-btn restart-btn">Yes, restart</button>
+            <button
+              className="modal-btn btn-restart"
+              onClick={() => {
+                resetBoard();
+                setShowRestartModal(false);
+              }}
+            >
+              Yes, restart
+            </button>
           </div>
         </Modal>
       )}
       {showResultsModal && (
         <Modal modalClasses="modal results-modal">
           <div className="content-wrapper">
-            {playAgainstCPU && (
+            {playAgainstCPU && winner !== "tied" && (
               <h2 className="results-heading">
-                Oh no, you lost You won! Round tied
+                {(winner === playersInfo[0].playerOne &&
+                  playersInfo[0].playerType === "human") ||
+                (winner === playersInfo[1].playerTwo &&
+                  playersInfo[1].playerType === "human")
+                  ? "You won!"
+                  : "Oh no, you lost"}
               </h2>
             )}
-            {!playAgainstCPU && (
+            {!playAgainstCPU && winner !== "tied" && (
               <h2 className="results-heading">
-                {" "}
-                Player {/* <!-- 1/2 --> */} wins!
+                Player {winner === playersInfo[0].playerOne ? "1" : "2"} wins!
               </h2>
             )}
-            <p class={`results-paragraph ${winner}-paragraph`}>
-              <img
-                src={winner === "x" ? xIcon : oIcon}
-                alt=""
-                class="winner-marker"
-              />
-              <span>takes the round</span>
-            </p>
+            {winner !== "tied" && (
+              <p className={`results-paragraph ${winner}-paragraph`}>
+                <img
+                  src={winner === "x" ? xIcon : oIcon}
+                  alt=""
+                  className="winner-marker"
+                />
+                <span>takes the round</span>
+              </p>
+            )}
+            {winner === "tied" && (
+              <h2 className="tied-results-heading">Round tied</h2>
+            )}
             <button
               className="modal-btn quit-btn"
-              onClick={() => setShowResultsModal(false)}
+              onClick={() => {
+                disableBoard();
+                setShowResultsModal(false);
+              }}
             >
               Quit
             </button>
-            <button className="modal-btn next-btn">Next round</button>
+            <button
+              className="modal-btn next-btn"
+              onClick={() => {
+                resetBoard();
+                setShowResultsModal(false);
+              }}
+            >
+              Next round
+            </button>
           </div>
         </Modal>
       )}

@@ -62,8 +62,20 @@
   background-image: url("../assets/icon-x.svg");
 }
 
+.board-space.x-space.winning-play {
+  background-image: url("../assets/icon-x-dark.svg");
+  background-color: var(--light-blue);
+  box-shadow: inset 0px -8px 0px #118c87;
+}
+
 .board-space.o-space {
   background-image: url("../assets/icon-o.svg");
+}
+
+.board-space.o-space.winning-play {
+  background-image: url("../assets/icon-o-dark.svg");
+  background-color: var(--light-yellow);
+  box-shadow: inset 0px -8px 0px #cc8b13;
 }
 
 .score-wrapper {
