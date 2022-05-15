@@ -177,12 +177,7 @@ const App = () => {
     setGameInProgress(false);
   };
 
-  // useEffect(() => {
-  //   determineWinner();
-  // }, [determineWinner]);
-
   useEffect(() => {
-    // TODO: Stop CPU from playing if modal is open
     const cpuMarker = playersInfo[1].playerTwo;
     if (
       playAgainstCPU &&
