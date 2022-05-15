@@ -75,15 +75,15 @@ const App = () => {
 
   const resetBoard = () => {
     setBoardSpaces([
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
-      { spaceDisabled: false },
+      { id: 1, spaceDisabled: false },
+      { id: 2, spaceDisabled: false },
+      { id: 3, spaceDisabled: false },
+      { id: 4, spaceDisabled: false },
+      { id: 5, spaceDisabled: false },
+      { id: 6, spaceDisabled: false },
+      { id: 7, spaceDisabled: false },
+      { id: 8, spaceDisabled: false },
+      { id: 9, spaceDisabled: false },
     ]);
     setCurrentTurn(1);
   };
