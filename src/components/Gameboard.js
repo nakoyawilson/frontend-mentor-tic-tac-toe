@@ -26,6 +26,7 @@ const Gameboard = ({
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="turn-icon"
             >
               <path
                 fillRule="evenodd"
@@ -41,6 +42,7 @@ const Gameboard = ({
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="turn-icon"
             >
               <path
                 fillRule="evenodd"

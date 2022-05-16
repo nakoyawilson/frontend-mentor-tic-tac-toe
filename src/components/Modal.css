@@ -164,15 +164,6 @@
   padding: 6.1rem 0;
 }
 
-.restart-heading {
-  font-weight: 700;
-  font-size: 2.4rem;
-  line-height: 3rem;
-  letter-spacing: 1.5px;
-  color: var(--silver);
-  margin-bottom: 2.4rem;
-}
-
 /* Results */
 
 .results-modal .content-wrapper {
@@ -211,4 +202,71 @@
 }
 .results-paragraph.o-paragraph .winner-marker {
   width: 3rem;
+}
+
+/* Media Queries */
+@media screen and (min-width: 376px) {
+  /* New Game */
+  .new-game.container {
+    margin: 27.7rem auto auto;
+  }
+
+  .icon-settings {
+    margin-top: 4rem;
+    padding: 2.4rem 2.4rem 3rem;
+  }
+
+  .new-game-btn {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: 1.25px;
+    padding: 1.7rem 1.7rem 2.5rem;
+  }
+
+  .new-game-cpu {
+    margin: 4rem 0 2rem;
+  }
+
+  /* Shared */
+  .modal-btn {
+    padding: 1.5rem 1.6rem 1.7rem 1.8rem;
+  }
+
+  .restart-heading,
+  .tied-results-heading {
+    font-size: 4rem;
+    line-height: 5rem;
+    letter-spacing: 2.5px;
+    margin-bottom: 3.1rem;
+  }
+
+  /* Restart */
+  .restart-modal .content-wrapper {
+    padding: 6.7rem 0 6.6rem;
+  }
+
+  /* Results */
+
+  .results-modal .content-wrapper {
+    padding: 4.5rem 0;
+  }
+
+  .results-heading {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    letter-spacing: 1px;
+    color: var(--silver);
+  }
+
+  .results-paragraph {
+    font-size: 4rem;
+    line-height: 5rem;
+    letter-spacing: 2.5px;
+    gap: 2.4rem;
+  }
+
+  .results-paragraph.x-paragraph .winner-marker,
+  .results-paragraph.o-paragraph .winner-marker {
+    width: 6.4rem;
+  }
 }

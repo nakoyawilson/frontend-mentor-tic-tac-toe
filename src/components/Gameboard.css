@@ -120,3 +120,59 @@
   line-height: 2.5rem;
   letter-spacing: 1.25px;
 }
+
+/* Media Queries */
+@media screen and (min-width: 376px) {
+  .gameboard.container {
+    margin: 20.1rem auto 20rem;
+  }
+
+  .turn-indicator {
+    border-radius: 10px;
+    gap: 1.3rem;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    letter-spacing: 1px;
+    padding: 1.3rem 3rem 1.9rem;
+  }
+
+  .turn-icon {
+    width: 20px;
+  }
+
+  .restart-btn {
+    border-radius: 10px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .restart-icon {
+    width: 20px;
+  }
+
+  .game-grid {
+    grid-template-rows: repeat(3, 140px);
+    margin-top: 1.9rem;
+  }
+
+  .board-space {
+    background-position: center 38px;
+    background-size: 64px 64px;
+    border-radius: 15px;
+  }
+
+  .score-wrapper {
+    margin-top: 1.9rem;
+  }
+
+  .score {
+    padding: 1.3rem 1.3rem 1.1rem;
+    border-radius: 15px;
+  }
+
+  .score-value {
+    font-size: 2.4rem;
+    line-height: 3rem;
+    letter-spacing: 1.5px;
+  }
+}

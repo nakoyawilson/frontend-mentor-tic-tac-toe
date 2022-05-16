@@ -64,3 +64,10 @@ button {
 .container {
   width: min(87.46667%, 328px);
 }
+
+/* Media Queries */
+@media screen and (min-width: 376px) {
+  .container {
+    width: min(59.89583%, 460px);
+  }
+}

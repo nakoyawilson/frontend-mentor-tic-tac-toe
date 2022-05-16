@@ -6,6 +6,8 @@ import xIcon from "./assets/icon-x.svg";
 import oIcon from "./assets/icon-o.svg";
 import "./App.css";
 
+// TODO: Prevent turn from updating if gameover
+
 const App = () => {
   const [showNewGameModal, setShowNewGameModal] = useState(true);
   const [showRestartModal, setShowRestartModal] = useState(false);
@@ -219,7 +221,9 @@ const App = () => {
       spaces[spaceIndex].spaceClass = "o-space";
       spaces[spaceIndex].spaceDisabled = true;
     }
-    setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
+    if (gameInProgress) {
+      setCurrentTurn((prevCurrentTurn) => prevCurrentTurn + 1);
+    }
     setBoardSpaces(spaces);
     determineWinner();
   };
