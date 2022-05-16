@@ -372,7 +372,6 @@ const App = () => {
               New Game (vs CPU)
             </button>
             <button
-              htmlFor="humanPlayer"
               className="new-game-btn new-game-human"
               type="button"
               value="human"
