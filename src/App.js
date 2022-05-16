@@ -6,7 +6,7 @@ import xIcon from "./assets/icon-x.svg";
 import oIcon from "./assets/icon-o.svg";
 import "./App.css";
 
-// TODO: Prevent turn from updating if gameover
+// TODO: Prevent turn from updating if gameover until after game restarts
 
 const App = () => {
   const [showNewGameModal, setShowNewGameModal] = useState(true);
@@ -34,6 +34,7 @@ const App = () => {
     { id: 9, spaceDisabled: false },
   ]);
   const [gameInProgress, setGameInProgress] = useState(false);
+  const [xStarts, setXStarts] = useState(true);
 
   const startGame = (e) => {
     const updatePlayersInfo = [...playersInfo];
@@ -47,6 +48,8 @@ const App = () => {
     setShowNewGameModal(false);
     setPlayersInfo(updatePlayersInfo);
     setGameInProgress(true);
+    resetBoard();
+    setCurrentTurn(1);
   };
 
   const colorWinningTiles = useCallback(
@@ -252,7 +255,6 @@ const App = () => {
       { id: 8, spaceDisabled: false },
       { id: 9, spaceDisabled: false },
     ]);
-    setCurrentTurn(1);
     setWinner(null);
     setGameInProgress(true);
   };
@@ -408,6 +410,13 @@ const App = () => {
               onClick={() => {
                 resetBoard();
                 setShowRestartModal(false);
+                setCurrentTurn(() => {
+                  if (xStarts) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                });
               }}
             >
               Yes, restart
@@ -451,6 +460,7 @@ const App = () => {
               onClick={() => {
                 disableBoard();
                 setShowResultsModal(false);
+                setShowNewGameModal(true);
               }}
             >
               Quit
@@ -460,6 +470,14 @@ const App = () => {
               onClick={() => {
                 resetBoard();
                 setShowResultsModal(false);
+                setCurrentTurn(() => {
+                  if (xStarts) {
+                    return 0;
+                  } else {
+                    return 1;
+                  }
+                });
+                setXStarts(() => !xStarts);
               }}
             >
               Next round
