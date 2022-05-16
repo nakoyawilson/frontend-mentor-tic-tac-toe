@@ -26,6 +26,7 @@
   color: var(--silver);
   padding: 0.9rem 1.5rem 1.4rem;
   width: fit-content;
+  margin-right: 3rem;
 }
 
 .restart-btn {
@@ -130,6 +131,17 @@
     margin: 20.1rem auto 20rem;
   }
 
+  .header {
+    width: 457px;
+    margin: 0 auto;
+    justify-content: flex-end;
+    gap: 0;
+  }
+
+  .header .logo {
+    margin-right: auto;
+  }
+
   .turn-indicator {
     border-radius: 10px;
     gap: 1.3rem;
@@ -137,6 +149,7 @@
     line-height: 2rem;
     letter-spacing: 1px;
     padding: 1.3rem 3rem 1.9rem;
+    margin-right: 10.6rem;
   }
 
   .turn-icon {
@@ -187,21 +200,6 @@
     margin: 13.9rem auto 13.8rem;
   }
 
-  .header {
-    width: 456.24px;
-    margin: 0 auto;
-    justify-content: flex-end;
-    gap: 0;
-  }
-
-  .header .logo {
-    margin-right: auto;
-  }
-
-  .turn-indicator {
-    margin-right: 10.6rem;
-  }
-
   .restart-btn:hover {
     cursor: pointer;
     background: var(--silver-hover);
@@ -217,5 +215,11 @@
 
   .o-turn .board-space:hover:enabled {
     background-image: url("../assets/icon-o-outline.svg");
+  }
+}
+
+@media screen and (max-width: 315px) {
+  .turn-indicator {
+    margin-right: 0;
   }
 }
