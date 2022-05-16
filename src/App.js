@@ -12,7 +12,7 @@ const App = () => {
   const [showNewGameModal, setShowNewGameModal] = useState(false);
   const [showRestartModal, setShowRestartModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
-  const [playAgainstCPU, setPlayAgainstCPU] = useState(null);
+  const [playAgainstCPU, setPlayAgainstCPU] = useState(true);
   const [playersInfo, setPlayersInfo] = useState([
     { playerOne: "x", playerType: "human" },
     { playerTwo: "o" },

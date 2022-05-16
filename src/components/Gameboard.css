@@ -184,6 +184,21 @@
     margin: 13.9rem auto 13.8rem;
   }
 
+  .header {
+    width: 456.24px;
+    margin: 0 auto;
+    justify-content: flex-end;
+    gap: 0;
+  }
+
+  .header .logo {
+    margin-right: auto;
+  }
+
+  .turn-indicator {
+    margin-right: 10.6rem;
+  }
+
   .restart-btn:hover {
     cursor: pointer;
     background: var(--silver-hover);
