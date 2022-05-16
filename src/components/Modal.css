@@ -290,10 +290,14 @@
     background: var(--light-blue-hover);
   }
 
-  /* TODO: remove hover on checked button */
   .icon-label:hover {
     background: var(--label-hover);
     cursor: pointer;
+  }
+
+  .icon-option:checked + .icon-label {
+    cursor: default;
+    background: var(--silver);
   }
 
   .modal-btn:hover {
