@@ -78,9 +78,9 @@ const Gameboard = ({
               onClick={playRound}
               disabled={space.spaceDisabled || !gameInProgress}
             >
-              <p className="visually-hidden">
+              <span className="visually-hidden">
                 Tic Tac Toe <span className="move">blank</span> spaece
-              </p>
+              </span>
             </button>
           );
         })}
