@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [https://www.frontendmentor.io/solutions/tic-tac-toe-game-using-react-HJ8hvelw5](https://www.frontendmentor.io/solutions/tic-tac-toe-game-using-react-HJ8hvelw5)
 - Live Site URL: [https://nakoyawilson-tic-tac-toe.netlify.app/](https://nakoyawilson-tic-tac-toe.netlify.app/)
 
 ## My process
