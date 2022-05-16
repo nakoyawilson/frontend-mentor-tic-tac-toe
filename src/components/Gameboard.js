@@ -65,7 +65,7 @@ const Gameboard = ({
           <img src={iconRestart} alt="" className="restart-icon" />
         </button>
       </div>
-      <div className="game-grid">
+      <div className={`game-grid ${currentTurn % 2 ? "x-turn" : "o-turn"}`}>
         {boardSpaces.map((space, idx) => {
           return (
             <button

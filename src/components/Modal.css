@@ -270,3 +270,43 @@
     width: 6.4rem;
   }
 }
+
+@media screen and (min-width: 768px) {
+  /* New Game */
+  .new-game.container {
+    margin: 21.5rem auto auto;
+  }
+
+  .new-game-btn:hover {
+    display: block;
+    cursor: pointer;
+  }
+
+  .new-game-cpu:hover {
+    background: var(--light-yellow-hover);
+  }
+
+  .new-game-human:hover {
+    background: var(--light-blue-hover);
+  }
+
+  /* TODO: remove hover on checked button */
+  .icon-label:hover {
+    background: var(--label-hover);
+    cursor: pointer;
+  }
+
+  .modal-btn:hover {
+    cursor: pointer;
+  }
+
+  .modal-btn.cancel-btn:hover,
+  .modal-btn.quit-btn:hover {
+    background: var(--silver-hover);
+  }
+
+  .modal-btn.next-btn:hover,
+  .modal-btn.btn-restart:hover {
+    background: var(--light-yellow-hover);
+  }
+}

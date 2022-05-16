@@ -13,6 +13,7 @@
   --light-yellow-hover: hsl(39, 100%, 69%);
   --light-yellow-shadow: #cc8b13;
   --black-transparent: hsla(0, 0%, 0%, 0.5);
+  --label-hover: rgba(168, 191, 201, 0.05);
 }
 
 /* CSS Reset */

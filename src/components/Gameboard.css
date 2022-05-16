@@ -176,3 +176,26 @@
     letter-spacing: 1.5px;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .gameboard.container {
+    margin: 13.9rem auto 13.8rem;
+  }
+
+  .restart-btn:hover {
+    cursor: pointer;
+    background: var(--silver-hover);
+  }
+
+  .board-space:hover:enabled {
+    cursor: pointer;
+  }
+
+  .x-turn .board-space:hover:enabled {
+    background-image: url("../assets/icon-x-outline.svg");
+  }
+
+  .o-turn .board-space:hover:enabled {
+    background-image: url("../assets/icon-o-outline.svg");
+  }
+}
