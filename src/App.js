@@ -9,7 +9,7 @@ import "./App.css";
 // TODO: Prevent turn from updating if gameover until after game restarts
 
 const App = () => {
-  const [showNewGameModal, setShowNewGameModal] = useState(true);
+  const [showNewGameModal, setShowNewGameModal] = useState(false);
   const [showRestartModal, setShowRestartModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [playAgainstCPU, setPlayAgainstCPU] = useState(null);
