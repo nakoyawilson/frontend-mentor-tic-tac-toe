@@ -67,8 +67,8 @@ button {
 }
 
 /* Media Queries */
-@media screen and (min-width: 376px) {
+@media screen and (min-width: 500px) {
   .container {
-    width: min(59.89583%, 460px);
+    width: 460px;
   }
 }

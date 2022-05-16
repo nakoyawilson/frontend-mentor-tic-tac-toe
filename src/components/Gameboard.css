@@ -6,6 +6,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1.6rem;
 }
 
 .turn-indicator {
@@ -122,7 +124,7 @@
 }
 
 /* Media Queries */
-@media screen and (min-width: 376px) {
+@media screen and (min-width: 500px) {
   .gameboard.container {
     margin: 20.1rem auto 20rem;
   }
@@ -177,7 +179,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1028px) {
   .gameboard.container {
     margin: 13.9rem auto 13.8rem;
   }
